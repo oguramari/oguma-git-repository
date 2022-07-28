@@ -24,10 +24,10 @@ public class ControllerTest {
     @Test /* レスポンス情報が期待通りであることを確認.  */
     void test02() throws Exception {
         String expected = "{\"userId\":\"0001\",\"userName\":\"demoUser01\",\"age\":30}";
-        String result = mockMvc.perform(get("http://localhost:8080/demo?userId=0001"))
+        String actual = mockMvc.perform(get("http://localhost:8080/demo?userId=0001"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        Assertions.assertEquals(expected, result);
+        Assertions.assertEquals(expected, actual);
     }
 }
