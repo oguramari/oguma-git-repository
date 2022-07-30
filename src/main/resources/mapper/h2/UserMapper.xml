@@ -5,14 +5,42 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.demo.repository.UserMapper">
 
- <!-- マッピング定義 -->
- <resultMap type="com.example.demo.model.DemoUser" id="userId">
-  <id column="user_id" property="user_id"/>
+ <!-- マッピング定義（ユーザー）-->
+ <resultMap type="com.example.demo.model.DemoUser" id="demoUser">
+  <id column="user_id" property="userId"/>
+  <result column="password" property="password"/>
   <result column="user_name" property="userName"/>
+  <result column="birthday" property="birthday"/>
   <result column="age" property="age"/>
+  <result column="gender" property="gender"/>
+  <result column="department_id" property="departmentId"/>
+  <result column="role" property="role"/>
+  <association property="department" resultMap="department"/>
  </resultMap>
-<!-- 1件検索 -->
- <select id = "selectOne" resultType="DemoUser">
-  select * from demo_user where user_id = #{userId};
+
+ <!-- マッピング定義（部署）-->
+ <resultMap type="com.example.demo.model.Department" id="department">
+  <id column="department_id" property="departmentId"/>
+  <id column="department_name" property="departmentName"/>
+ </resultMap>
+
+ <!-- 1件検索 -->
+ <select id = "selectOne" parameterType="string"
+         resultMap="demoUser">
+  select
+   demo_user.user_id
+       ,demo_user.password
+       ,demo_user.user_name
+       ,demo_user.birthday
+       ,demo_user.age
+       ,demo_user.gender
+       ,demo_user.role
+       ,demo_department.department_id
+       ,demo_department.department_name
+  from demo_user
+        left join demo_department
+                  on demo_user.department_id = demo_department.department_id
+  where
+   demo_user.user_id = #{userId}
  </select>
 </mapper>
