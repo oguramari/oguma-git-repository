@@ -39,7 +39,7 @@
        ,demo_department.department_name
   from demo_user
         left join demo_department
-                  on demo_user.department_id = demo_department.department_id
+        on demo_user.department_id = demo_department.department_id
   where
    demo_user.user_id = #{userId}
  </select>
